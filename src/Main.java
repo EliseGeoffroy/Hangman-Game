@@ -1,63 +1,65 @@
 
 
+import com.hangman.guessgame.GuessGame;
+import com.hangman.verifEntry.VerifEntry;
+
+
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String[] wordsTable={"cacahuete","joli","pirate","exceptionnel","fruit","couteau","poupee","pastis","hypermetrope","mezzanine"};
-        String[] hangingGuy={"____","|","|","|      /\\","|      |","|     \\O/","|      |","_______"};
+        String[] wordsTable = {"cacahuete", "joli", "pirate", "exceptionnel", "fruit", "couteau", "poupee", "pastis", "hypermetrope", "mezzanine"};
 
-        var random=new Random();
-        String wordToWonder=wordsTable[random.nextInt(wordsTable.length)];
-        char[] buildingWord= new char[wordToWonder.length()];
-        for (int i=0;i<wordToWonder.length();i++){
-            buildingWord[i]='_';
-        }
-        
-        int errorsNumber=0;
-        
+        boolean newGame = true;
 
-        while ((errorsNumber< hangingGuy.length)&&(!new String(buildingWord).equals(wordToWonder))) {
+        while (newGame) {
 
-            System.out.println(buildingWord);
+            var random = new Random();
+            String wordToWonder = wordsTable[random.nextInt(wordsTable.length)];
 
-            char newLetter='0';
-            String entry="bebe";
+            var guessGame = new GuessGame(wordToWonder);
+            var verifEntry = new VerifEntry();
 
-            while(((newLetter>'z')||(newLetter<'a'&&newLetter>'Z')||newLetter<'A')||(entry.length()!=1)) {
+            while ((!guessGame.noMoreLifePoints()) && (!guessGame.sameWord())) {
 
-                System.out.println("Veuillez renseigner une nouvelle lettre");
-                var scanner = new Scanner(System.in);
-                entry=scanner.nextLine();
-                newLetter=entry.charAt(0);
+                System.out.println(guessGame);
 
-                if ((newLetter>'z')||(newLetter<'a')){
-                    System.out.println("Nous avons bien dit \"LETTRE\" et non \"chiffre\", petit coquin!");
-                }else if (entry.length()!=1){
-                    System.out.println("Nous avons bien dit \"UNE\" lettre et non \"plusieurs\" lettres, petit coquin!");
-                }
+                var letter=verifEntry.getNewLetter();
+
+                guessGame.guessALetter(letter);
+
             }
-            var indexLetter = wordToWonder.indexOf(newLetter);
-
-            if (indexLetter != -1) {
-                while (indexLetter != -1) {
-                    buildingWord[indexLetter] = newLetter;
-                    indexLetter = wordToWonder.indexOf(newLetter, indexLetter + 1);
-                }
+            if (guessGame.noMoreLifePoints()) {
+                System.out.println("Oups, vous avez perdu!, le mot était : " + wordToWonder);
             } else {
-                System.out.println("Oups, il n'y a pas cette lettre dans mon mot... Un nouveau morceau de la potence apparaît :");
-                for (int i = errorsNumber; i > -1; i--) {
-                    System.out.println(hangingGuy[i]);
-                }
-                errorsNumber++;
+                System.out.println("Quel champion! Bravo! ");
+                System.out.println("Le mot était bien: " + wordToWonder);
             }
-        }
-        if (errorsNumber== hangingGuy.length){
-            System.out.println("Oups, vous avez perdu!, le mot était : "+wordToWonder);
-        }else {
-            System.out.println("Quel champion! Bravo! ");
-            System.out.println("Le mot était bien: "+wordToWonder);
+
+
+            System.out.println("Voulez-vous rejouer Y/N?");
+            var scanner = new Scanner(System.in);
+            boolean goodAnswer=false;
+            do{
+
+                switch (scanner.nextLine().charAt(0)){
+                    case 'Y':
+                    case 'y':
+                        newGame=true;
+                        goodAnswer=true;
+                        break;
+                    case 'N':
+                    case 'n':
+                        newGame=false;
+                        goodAnswer=true;
+                        break;
+                    default:
+                        goodAnswer=false;
+                        System.out.println("Je n'ai pas compris, pouvez-vous répéter ? Répondez Y ou y pour oui et N ou n pour non.");
+                }
+            }while (!goodAnswer);
         }
     }
 }
