@@ -7,7 +7,7 @@ public class GuessGame {
 
     private int nbErrors;
     private final  static String[] hangingGuy={"____","|","|","|      /\\","|      |","|     \\O/","|      |","_______"};
-    private final static int lifePoints=hangingGuy.length();
+    private final static int lifePoints=hangingGuy.length;
     private List<Character> buildingWord = new ArrayList<Character>();
     private String wordToWonder;
     private List<Character> wordToWonderTable= new ArrayList<Character>();
