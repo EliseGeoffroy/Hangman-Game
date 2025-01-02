@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class GuessGame {
 
     private int nbErrors;
-    private final static int lifePoints=8;
     private final  static String[] hangingGuy={"____","|","|","|      /\\","|      |","|     \\O/","|      |","_______"};
+    private final static int lifePoints=GuessGame.handingGuy.length();
     private  ArrayList<Character> buildingWord = new ArrayList<Character>();
     private String wordToWonder;
     private ArrayList<Character> wordToWonderTable= new ArrayList<Character>();
