@@ -79,7 +79,7 @@ public class GuessGame {
     public String toString() {
         String buildingWordString="";
         for (char character : buildingWord){
-            buildingWordString=buildingWordString+character;
+            buildingWordString += character;
         }
         return "Voici le mot en cours de construction : " + buildingWordString + ". Il vous reste encore " + (lifePoints-nbErrors) + ((lifePoints-nbErrors>1)?" tentatives":" tentative");
     }
