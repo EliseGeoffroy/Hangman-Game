@@ -1,18 +1,32 @@
 package com.hangman.verifEntry;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class VerifEntry {
 
-    private char Letter;
+    private char letter;
     private String entry;
-    private ArrayList <Character> alreadyGivenCharacters;
+    private List<Character> alreadyGivenCharacters= new ArrayList <Character>() ;
 
-    public VerifEntry(String entry, ArrayList <Character> alreadyGivenCharacters) {
-        this.entry=entry;
-        this.Letter=(!entry.isEmpty())?entry.charAt(0):'0';
-        this.alreadyGivenCharacters=alreadyGivenCharacters;
+    public VerifEntry() {
     }
+
+public char getNewLetter(){
+    do {
+        System.out.println("Veuillez renseigner une nouvelle lettre");
+        var scanner = new Scanner(System.in);
+        entry = scanner.nextLine();
+        letter=(!entry.isEmpty())?entry.charAt(0):'0';
+        System.out.println(this);
+    }
+    while (this.entryTooLong() || this.letterIsNotALetter() ||this.letterAlreadyGiven());
+
+    alreadyGivenCharacters.add(letter);
+
+    return letter;
+}
 
     /**
      * Control entryLength (we want only one character)
@@ -27,7 +41,7 @@ public class VerifEntry {
      * @return true if character is not a letter (cap or min), false if OK
      */
     public boolean letterIsNotALetter(){
-        return (Letter>'z'||(Letter<'a'&&Letter>'Z')||Letter<'A');
+        return (letter>'z'||(letter<'a'&&letter>'Z')||letter<'A');
     }
 
     /**
@@ -35,7 +49,7 @@ public class VerifEntry {
      * @return true if the letter has already been given by user, false if OK
      */
     public boolean letterAlreadyGiven(){
-        return alreadyGivenCharacters.contains(this.Letter);
+        return alreadyGivenCharacters.contains(this.letter);
     }
 
     /**
@@ -51,11 +65,11 @@ public class VerifEntry {
         } else if (this.letterAlreadyGiven()){
             return "Vous avez déjà donné cette lettre. Pour rappel, les lettres que vous avez déjà essayées sont : "+ alreadyGivenCharacters;
         }
-        return "Vous avez choisi la lettre :" + Letter;
+        return "Vous avez choisi la lettre :" + letter;
     }
 
 
     public char getLetter() {
-        return Letter;
+        return letter;
     }
 }

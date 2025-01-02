@@ -20,27 +20,15 @@ public class Main {
             String wordToWonder = wordsTable[random.nextInt(wordsTable.length)];
 
             var guessGame = new GuessGame(wordToWonder);
-            var alreadyGivenCharacters = new ArrayList<Character>();
+            var verifEntry = new VerifEntry();
 
             while ((!guessGame.noMoreLifePoints()) && (!guessGame.sameWord())) {
 
                 System.out.println(guessGame);
 
+                var letter=verifEntry.getNewLetter();
 
-                var verifEntry = new VerifEntry("",alreadyGivenCharacters);
-
-                do {
-                    System.out.println("Veuillez renseigner une nouvelle lettre");
-                    var scanner = new Scanner(System.in);
-                    String entry = scanner.nextLine();
-                    verifEntry = new VerifEntry(entry,alreadyGivenCharacters);
-                    System.out.println(verifEntry);
-                }
-                while (verifEntry.entryTooLong() || verifEntry.letterIsNotALetter() || verifEntry.letterAlreadyGiven());
-
-                alreadyGivenCharacters.add(verifEntry.getLetter());
-
-                guessGame.guessALetter(verifEntry.getLetter());
+                guessGame.guessALetter(letter);
 
             }
             if (guessGame.noMoreLifePoints()) {

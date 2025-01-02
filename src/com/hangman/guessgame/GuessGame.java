@@ -1,15 +1,16 @@
 package com.hangman.guessgame;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GuessGame {
 
     private int nbErrors;
     private final  static String[] hangingGuy={"____","|","|","|      /\\","|      |","|     \\O/","|      |","_______"};
-    private final static int lifePoints=GuessGame.handingGuy.length();
-    private  ArrayList<Character> buildingWord = new ArrayList<Character>();
+    private final static int lifePoints=hangingGuy.length();
+    private List<Character> buildingWord = new ArrayList<Character>();
     private String wordToWonder;
-    private ArrayList<Character> wordToWonderTable= new ArrayList<Character>();
+    private List<Character> wordToWonderTable= new ArrayList<Character>();
 
     /**
      * class Constructor => builds a list for the building word (with the good number of '_' and a list for the wordToWonder (in order to compare both lists)
@@ -79,7 +80,7 @@ public class GuessGame {
     public String toString() {
         String buildingWordString="";
         for (char character : buildingWord){
-            buildingWordString += character;
+            buildingWordString=buildingWordString+character;
         }
         return "Voici le mot en cours de construction : " + buildingWordString + ". Il vous reste encore " + (lifePoints-nbErrors) + ((lifePoints-nbErrors>1)?" tentatives":" tentative");
     }
